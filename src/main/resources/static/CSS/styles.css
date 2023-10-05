@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: url("../IMG/fondo.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    animation: animateBg 5s linear infinite;
+}
+
+@keyframes animateBg {
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+.info {
+    margin-left: 5%;
+    margin-right: 3%;
+    margin-top: -10%;
+    float: left;
+    width: 50%;
+}
+
+.canvas{
+    width: 50%;
+    float: right;
+    position: flex;
+    margin-left: 10%;
+}
+
+.canvas h2{
+    margin-top: 35%;
+    color: white;
+    position: relative;
+  
+}
+
+label {
+    color: white;
+    font-size: 2em;
+}
+
+.table-bordered {
+    border: 1px solid red !important;
+}
+
+.table {
+    width: 100%;
+    margin-right: 10%;
+    font-size: 2em;
+}
+
+#paint {
+    margin-top: 1%;
+    border: 2px solid white;
+    background-color: black;
+    
+}
+
+.info h2, .table{
+    color: white;
+    margin-bottom: 12%;
+    margin-top: 10%;
+}
+
+#theInput {
+    position: flex;
+    width: 40%;
+    height: 50px;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 7px;
+    outline: none ;
+    font-size: 1.5em;
+    color: #fff;
+    margin-left: 10%;
+}
+
+
+
+.table-hover tr:hover th,
+.table-hover tr:hover td {
+    background-color: rgb(254, 152, 152);
+}
+
+.buttom:hover, .draw:hover{
+    height: 45px;
+    background-color: #fff !important;
+    color: red !important;
+    font-size: 1.2em;
+}
+.draw{
+    position: flex;
+    width: 90%;
+    height: 900%;
+    background: rgba(255, 255, 255, .5);
+    border: none;
+    outline: none ;
+    border-radius: 20px ;
+    cursor: pointer;
+    font-size: 1em;
+    color: red;
+    font-weight: 500;
+    transition: all .3s ;
+}
+
+.buttom{
+    position: absolute;
+    width: 10%;
+    height: 40px;
+    margin-left: 10%; 
+    background: rgba(255, 255, 255, .5);
+    border: none;
+    outline: none ;
+    border-radius: 40px ;
+    cursor: pointer;
+    font-size: 1em;
+    color: #000;
+    font-weight: 500;
+    transition: all .3s ;
+}
