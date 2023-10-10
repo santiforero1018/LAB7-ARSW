@@ -13,7 +13,7 @@ body {
     background: url("../IMG/fondo.jpg") no-repeat;
     background-size: cover;
     background-position: center;
-    
+
 }
 
 @keyframes animateBg {
@@ -21,6 +21,7 @@ body {
         filter: hue-rotate(360deg);
     }
 }
+
 .info {
     margin-left: 5%;
     margin-right: 3%;
@@ -29,18 +30,19 @@ body {
     width: 50%;
 }
 
-.canvas{
+.canvas {
     width: 50%;
     float: right;
     position: flex;
     margin-left: 10%;
+    touch-action: none;
 }
 
-.canvas h2{
+.canvas h2 {
     margin-top: 35%;
     color: white;
     position: relative;
-  
+
 }
 
 label {
@@ -57,9 +59,9 @@ label {
     --bs-table-color: #fff !important;
 }
 
-.table-primary{
+.table-primary {
     --bs-table-bg: transparent !important;
-    
+
 }
 
 #paint {
@@ -67,10 +69,11 @@ label {
     border: 2px solid white;
     background-color: black;
     animation: animateBg 5s linear infinite;
-    
+
 }
 
-.info h2, .table{
+.info h2,
+.table {
     color: white;
     margin-bottom: 12%;
     margin-top: 10%;
@@ -83,7 +86,7 @@ label {
     background: transparent;
     border: 2px solid white;
     border-radius: 7px;
-    outline: none ;
+    outline: none;
     font-size: 1.5em;
     color: #fff;
     margin-left: 10%;
@@ -96,41 +99,59 @@ label {
     background-color: rgb(254, 152, 152);
 }
 
-.buttom:hover, .draw:hover{
+.buttom:hover, .draw:hover, .upt:hover {
     height: 45px;
-    background-color: #fff !important;
+    background-color: blue !important;
     color: red !important;
     font-size: 1.2em;
 }
-.draw{
+
+.draw {
     position: flex;
     width: 90%;
     height: 90%;
     background: rgba(255, 255, 255, .5);
     border: none;
-    outline: none ;
-    border-radius: 20px ;
+    outline: none;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 1em;
     color: red;
     font-weight: 500;
-    transition: all .3s ;
+    transition: all .3s;
     animation: animateBg 5s linear infinite;
 }
 
-.buttom{
+.new {
+    position: absolute;
+    width: 25%;
+    height: 40px;
+    margin-top: -28%;
+    margin-right: -31%;
+    margin-bottom: 3%;
+}
+
+.upt {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 10%;
+    width: 30%;
+    animation: animateBg 5s linear infinite;
+}
+
+.buttom {
     position: absolute;
     width: 10%;
     height: 40px;
-    margin-left: 10%; 
+    margin-left: 10%;
     background: rgba(255, 255, 255, .5);
     border: none;
-    outline: none ;
-    border-radius: 40px ;
+    outline: none;
+    border-radius: 40px;
     cursor: pointer;
     font-size: 1em;
     color: #fff;
     font-weight: 500;
-    transition: all .3s ;
+    transition: all .3s;
     animation: animateBg 5s linear infinite;
 }

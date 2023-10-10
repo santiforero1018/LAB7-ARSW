@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* Disable intrinsic user agent touch behaviors (such as panning or zooming) */
+        canvas {
+            touch-action: none;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        function initPointerCanvas() {
+            
+            var canvas = document.getElementById("mycanvas");
+            canvas.style.display = 'block';
+            if (window.PointerEvent) {
+                canvas.addEventListener("pointerdown", draw, false);
+            }
+            else canvas.addEventListener("mousedown", draw, false);
+
+        }
+
+        function draw(event) {
+            var canvas = document.getElementById('mycanvas');
+            var offset = getOffset(canvas);
+            //var datadiv = document.getElementById('datadiv');
+            //datadiv.innerHTML = 'offsetLeft: ' + offset.left + ', offsetTop: ' + offset.top;
+            if (canvas.getContext) {
+                var ctx = canvas.getContext("2d");
+
+
+                ctx.fillStyle = '#ff0000';
+                ctx.fillRect(event.pageX - offset.left, event.pageY - offset.top, 5, 5);
+
+
+            }
+        }
+
+        //  function drawMouse(event) {
+
+        //   var canvas = document.getElementById('mycanvas');
+        //    var offset  = getOffset(canvas);
+        //    var datadiv = document.getElementById('datadiv');
+
+        //    if (canvas.getContext) {
+        //      var ctx = canvas.getContext("2d");
+
+        //   ctx.fillStyle = '#ff0000';
+        //   ctx.fillRect(event.pageX-offset.left, event.pageY-offset.top, 5, 5);
+
+        //  }
+        // } 
+
+
+        function getOffset(obj) {
+            var offsetLeft = 0;
+            var offsetTop = 0;
+            do {
+                if (!isNaN(obj.offsetLeft)) {
+                    offsetLeft += obj.offsetLeft;
+                }
+                if (!isNaN(obj.offsetTop)) {
+                    offsetTop += obj.offsetTop;
+                }
+            } while (obj = obj.offsetParent);
+            return { left: offsetLeft, top: offsetTop };
+        }
+
+    </script>
+</head>
+
+<body onload="initPointerCanvas()">
+    <p><canvas id="mycanvas" width="662" height="373" style="border: 1px solid rgb(204, 204, 204); display: block;"><br>
+            Canvas element not supported<br>
+        </canvas><br>
+        <br>
+        <!-- 
+        
+        <div id="datadiv" style="width:100%;height:30px"> -->
+    </p>
+
+    <div id="datadiv" >
+        <a href="" onclick="initPointerCanvas();return false;" rel="nofollow"></a>
+    </div>
+</body>
+
+</html>

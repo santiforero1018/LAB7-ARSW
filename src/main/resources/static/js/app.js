@@ -70,12 +70,61 @@ appModule = (function () {
 
     
 
+    function draw(event) {
+        var canvas = document.getElementById("paint");
+        var offset = getOffset(canvas);
+        //var datadiv = document.getElementById('datadiv');
+        //datadiv.innerHTML = 'offsetLeft: ' + offset.left + ', offsetTop: ' + offset.top;
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle = 'red';
+            ctx.fillRect(event.pageX - offset.left, event.pageY - offset.top, 6, 6);
+        }
+    }
+
+    //  function drawMouse(event) {
+
+    //   var canvas = document.getElementById('mycanvas');
+    //    var offset  = getOffset(canvas);
+    //    var datadiv = document.getElementById('datadiv');
+
+    //    if (canvas.getContext) {
+    //      var ctx = canvas.getContext("2d");
+
+    //   ctx.fillStyle = '#ff0000';
+    //   ctx.fillRect(event.pageX-offset.left, event.pageY-offset.top, 5, 5);
+
+    //  }
+    // } 
+
+
+    function getOffset(obj) {
+        var offsetLeft = 0;
+        var offsetTop = 0;
+        do {
+            if (!isNaN(obj.offsetLeft)) {
+                offsetLeft += obj.offsetLeft;
+            }
+            if (!isNaN(obj.offsetTop)) {
+                offsetTop += obj.offsetTop;
+            }
+        } while (obj = obj.offsetParent);
+        return { left: offsetLeft, top: offsetTop };
+    }
 
     return {
         setAuthorName,
         getAuthorName,
         getBluePrints,
-        getABluePrint
+        getABluePrint,
+        initPointerCanvas:function() {
+            var canvas = document.getElementById("paint");
+            if (window.PointerEvent) {
+                canvas.addEventListener("pointerdown", draw, false);
+            }
+            else canvas.addEventListener("mousedown", draw, false);
+    
+        }
     }
 
 
