@@ -1,10 +1,16 @@
 appModule = (function () {
     let author = '';
 
+    let name = '';
+
     const api = true;
 
-    let currentApi = api ? apiclient:apimock;
-    
+    let currentApi = api ? apiclient : apimock;
+
+    let nextPoint = [];
+
+    let can = false;
+
     function setAuthorName() {
         author = $('#theInput').val();
     }
@@ -13,43 +19,53 @@ appModule = (function () {
         return author;
     }
 
-    function getBluePrints(){
-        currentApi.getBlueprintsByAuthor(author, function(data){
-            const bluePrints = data.map(function(bp){
-                return {name: bp.name, points: bp.points.length};
+
+    function getBluePrints() {
+        can = false;
+        var canvas = document.getElementById("paint");
+        var c = canvas.getContext("2d");
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        c.beginPath();
+        currentApi.getBlueprintsByAuthor(author, function (data) {
+            const bluePrints = data.map(function (bp) {
+                return { name: bp.name, points: bp.points.length };
             });
-            
-            
-            
+
+
+
             $('.table').find('td').remove();
-            
-            
+
+
             var i = 0;
             bluePrints.map(function (info) {
                 const newRow = $('<tr>');
                 newRow.append('<td class="bpname">' + info.name + '</td>');
                 newRow.append('<td>' + info.points + '</td>');
-                newRow.append('<td><button class="draw" onclick="appModule.getABluePrint('+i+')">Show</button></td>');
+                newRow.append('<td><button class="draw" onclick="appModule.getABluePrint(' + i + ')">Show</button></td>');
                 $('.table').append(newRow);
                 i++;
             });
 
-            
+
             const totalPoints = data.reduce((acc, bluePrint) => acc + bluePrint.points.length, 0);
             $('#total').text(totalPoints);
         });
+
+        
     }
 
-    function getABluePrint(index){
-        
+    function getABluePrint(index) {
+        can = true;
         const bpname = $('td.bpname').eq(index).text();
-        
-        currentApi.getBlueprintsByNameAndAuthor(author, bpname, function(data){
+
+        currentApi.getBlueprintsByNameAndAuthor(author, bpname, function (data) {
             var bluePrint = data;
-            
+
             $('#selected').text(bpname);
+            name = bpname;
+            console.log(name);
             var canvas = document.getElementById("paint");
-          
+
             var c = canvas.getContext("2d");
             c.clearRect(0, 0, canvas.width, canvas.height);
             c.beginPath();
@@ -57,18 +73,18 @@ appModule = (function () {
             c.lineWidth = 5;
             bluePrint.points.forEach(function (point, index) {
                 if (index === 0) {
-                    c.moveTo(point.x,point.y);
-                    
+                    c.moveTo(point.x, point.y);
                 } else {
                     c.lineTo(point.x, point.y);
-                    
+                    nextPoint[0] = point.x;
+                    nextPoint[1] = point.y
                 }
             });
             c.stroke();
         });
     }
 
-    
+
 
     function draw(event) {
         var canvas = document.getElementById("paint");
@@ -77,10 +93,39 @@ appModule = (function () {
         //datadiv.innerHTML = 'offsetLeft: ' + offset.left + ', offsetTop: ' + offset.top;
         if (canvas.getContext) {
             var ctx = canvas.getContext("2d");
-            ctx.fillStyle = 'red';
-            ctx.fillRect(event.pageX - offset.left, event.pageY - offset.top, 6, 6);
+            if (can) {
+                ctx.moveTo(nextPoint[0], nextPoint[1]);
+                ctx.lineTo(event.pageX - offset.left, event.pageY - offset.top);
+                ctx.stroke();
+                nextPoint[0] = event.pageX - offset.left;
+                nextPoint[1] = event.pageY - offset.top;
+            }
+            else {
+                ctx.fillStyle = 'red';
+                ctx.fillRect(event.pageX - offset.left, event.pageY - offset.top, 5, 5);
+            }
+            ctx.stroke();
         }
     }
+
+
+    function putBluePrint() {
+        return new Promise((resolve,reject) =>{
+            $.ajax({
+                url: "/API-V1.0Blueprints/"+author+"/"+name,
+                type: 'PUT',
+                data: '{"author":"Martha","points":[{"x":100,"y":100},{"x":100,"y":400},{"x":400,"y":400},{"x":400,"y":100},{"x":600,"y":600}],"name":"thepaint1"}',
+                contentType: "application/json",
+                success: function (dataa){
+                    resolve(dataa);
+                },
+                error: function (error){
+                    reject(error);
+                }
+            });
+        });
+    }
+
 
     //  function drawMouse(event) {
 
@@ -117,13 +162,14 @@ appModule = (function () {
         getAuthorName,
         getBluePrints,
         getABluePrint,
-        initPointerCanvas:function() {
+        putBluePrint,
+        initPointerCanvas: function () {
             var canvas = document.getElementById("paint");
             if (window.PointerEvent) {
                 canvas.addEventListener("pointerdown", draw, false);
             }
             else canvas.addEventListener("mousedown", draw, false);
-    
+
         }
     }
 

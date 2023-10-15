@@ -51,11 +51,12 @@
         <h2>Blueprint: <span id="selected"></span></h3>
 
             <canvas id="paint" width="700" height="700"></canvas>
-            
+
 
             <!-- boton de actualizar -->
-
-            <button type="button" class="upt btn btn-outline-danger">
+            <button type="button" class="upt btn btn-outline-danger" onclick="appModule.putBluePrint()
+                                                                                            .then(responseData =>{console.log('Solicitud PUT exitosa:', responseData);})
+                                                                                            .catch(error => {console.error('Error en la solicitud PUT:', error);});">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                     class="bi bi-cloud-upload" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -67,6 +68,7 @@
                 </svg>
                 Save/Update
             </button>
+
             <!-- boton de eliminar -->
             <button type="button" class="upt btn btn-outline-danger">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
@@ -94,7 +96,7 @@
             $('#AuthorName').text(appModule.getAuthorName());
         });
 
-        
+
     </script>
 
 </body>

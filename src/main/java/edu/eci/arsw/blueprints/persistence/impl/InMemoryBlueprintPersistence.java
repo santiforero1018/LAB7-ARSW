@@ -109,6 +109,8 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
                 this.saveBlueprint(new Blueprint(nbp.getAuthor(), nbp.getName(), aux));
             }
 
+            System.out.println("SI ME LLAMAN");
+
             
 
         } catch (BlueprintPersistenceException e) {
