@@ -74,11 +74,11 @@ public class BlueprintAPIController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{author}/{name}")
-    public ResponseEntity<?> updateBluePrint(@PathVariable String author, @PathVariable String name, @RequestBody Blueprint nbp){
+    public ResponseEntity<?> updateBluePrint(@RequestBody Blueprint nbp){
         try {
-            this.bps.updateBluePrint(author, name, nbp);
+            this.bps.updateBluePrint(nbp);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        } catch (BlueprintPersistenceException e) {
+        } catch (BlueprintNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }

@@ -11,6 +11,7 @@ import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 
+import java.util.ArrayList;
 // import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +34,8 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
 
         Blueprint bp1 = new Blueprint("john", "thepaint", new Point[] { new Point(0, 0), new Point(10, 10) });
 
-        Blueprint bp2 = new Blueprint("Martha", "thepaint1", new Point[] { new Point(100, 100), new Point(100, 400) , new Point(400, 400), new Point(400, 100) });
+        Blueprint bp2 = new Blueprint("Martha", "thepaint1",
+                new Point[] { new Point(100, 100), new Point(100, 400), new Point(400, 400), new Point(400, 100) });
 
         Blueprint bp3 = new Blueprint("john", "thepaint2", new Point[] { new Point(16, 7), new Point(30, 30) });
 
@@ -65,7 +67,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
             throw new BlueprintPersistenceException("The given blueprint already exists: " + bp);
         } else if (bp.getAuthor().isEmpty() || bp.getName().isEmpty()) {
             throw new BlueprintPersistenceException("The given blueprint hasn't author or name");
-        } 
+        }
     }
 
     @Override
@@ -97,25 +99,20 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
     }
 
     @Override
-    public void updateBluePrint(String author, String name, Blueprint nbp) throws BlueprintPersistenceException {
+    public void updateBluePrint(Blueprint nbp) throws BlueprintNotFoundException {
         try {
-            List<Point> aux2 = nbp.getPoints();
-            if (aux2.isEmpty() || aux2 == null) {
-                blueprints.remove(new Tuple<>(author, name));
-                this.saveBlueprint(new Blueprint(nbp.getAuthor(), nbp.getName()));
-            } else{
-                Point[] aux = aux2.toArray(new Point[aux2.size()]);
-                blueprints.remove(new Tuple<>(author, name));
-                this.saveBlueprint(new Blueprint(nbp.getAuthor(), nbp.getName(), aux));
-            }
-
-            System.out.println("SI ME LLAMAN");
-
-            
-
-        } catch (BlueprintPersistenceException e) {
-            throw new BlueprintPersistenceException(e.getMessage());
+            // lista puntos actuales
+            List<Point> oldP = new ArrayList<>(getBlueprint(nbp.getAuthor(),nbp.getName()).getPoints());
+            // lista puntos a agregar
+            List<Point> newP = nbp.getPoints();
+            // lista de puntos actualizada
+            oldP.addAll(newP);
+            // Actualiza la lista original con la nueva lista
+            getBlueprint(nbp.getAuthor(),nbp.getName()).setPoints(oldP);
+        } catch (BlueprintNotFoundException e) {
+            throw new BlueprintNotFoundException(e.getMessage());
         }
 
     }
+
 }

@@ -9,6 +9,8 @@ appModule = (function () {
 
     let nextPoint = [];
 
+    let newPoints = [];
+
     let can = false;
 
     function setAuthorName() {
@@ -22,6 +24,7 @@ appModule = (function () {
 
     function getBluePrints() {
         can = false;
+        newPoints = [];
         var canvas = document.getElementById("paint");
         var c = canvas.getContext("2d");
         c.clearRect(0, 0, canvas.width, canvas.height);
@@ -96,9 +99,11 @@ appModule = (function () {
             if (can) {
                 ctx.moveTo(nextPoint[0], nextPoint[1]);
                 ctx.lineTo(event.pageX - offset.left, event.pageY - offset.top);
+                newPoints.push({"x":event.pageX - offset.left, "y":event.pageY - offset.top});
                 ctx.stroke();
                 nextPoint[0] = event.pageX - offset.left;
                 nextPoint[1] = event.pageY - offset.top;
+
             }
             else {
                 ctx.fillStyle = 'red';
@@ -114,9 +119,11 @@ appModule = (function () {
             $.ajax({
                 url: "/API-V1.0Blueprints/"+author+"/"+name,
                 type: 'PUT',
-                data: '{"author":"Martha","points":[{"x":100,"y":100},{"x":100,"y":400},{"x":400,"y":400},{"x":400,"y":100},{"x":600,"y":600}],"name":"thepaint1"}',
+                data: JSON.stringify({"author":author,"points":newPoints,"name":name}),
                 contentType: "application/json",
                 success: function (dataa){
+                    newPoints = [];
+                    getBluePrints();
                     resolve(dataa);
                 },
                 error: function (error){

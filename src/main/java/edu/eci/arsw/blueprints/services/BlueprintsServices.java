@@ -96,11 +96,11 @@ public class BlueprintsServices {
 
     }
 
-    public void updateBluePrint(String author, String name, Blueprint nbp) throws BlueprintPersistenceException {
+    public void updateBluePrint(Blueprint nbp) throws BlueprintNotFoundException {
         try {
-            this.bpp.updateBluePrint(author, name, nbp);
-        } catch (BlueprintPersistenceException e) {
-            throw new BlueprintPersistenceException(e.getMessage());
+            this.bpp.updateBluePrint(nbp);
+        } catch (BlueprintNotFoundException e) {
+            throw new BlueprintNotFoundException(e.getMessage());
         }
     }
 
