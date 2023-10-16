@@ -102,7 +102,8 @@
             </button>
 
             <!-- boton de eliminar -->
-            <button type="button" class="upt btn btn-outline-danger">
+            <button type="button" class="upt btn btn-outline-danger" onclick="appModule.deleteBlueprint().then(responseData =>{console.log('Solicitud DELETE exitosa:', responseData);})
+                .catch(error => {console.error('Error en la solicitud DELETE:', error);});">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                     viewBox="0 0 16 16">
                     <path
@@ -128,7 +129,7 @@
             $('#AuthorName').text(appModule.getAuthorName());
         });
 
-        $('.add').click(function (){
+        $('.add').click(function () {
             appModule.addNewPoint();
         });
 

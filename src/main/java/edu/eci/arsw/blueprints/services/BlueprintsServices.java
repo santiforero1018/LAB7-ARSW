@@ -35,7 +35,7 @@ public class BlueprintsServices {
      * 
      * @param blueprint
      * @throws BlueprintPersistenceException
-     * @throws BlueprintPersistenceException
+     * 
      */
     public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
         try {
@@ -90,7 +90,6 @@ public class BlueprintsServices {
         try {
             return this.filter.getPoints(this.bpp.getBlueprint(author, bprintname));
         } catch (BlueprintNotFoundException e) {
-            // TODO: handle exception
             throw new BlueprintNotFoundException(e.getMessage());
         }
 
@@ -99,6 +98,14 @@ public class BlueprintsServices {
     public void updateBluePrint(Blueprint nbp) throws BlueprintNotFoundException {
         try {
             this.bpp.updateBluePrint(nbp);
+        } catch (BlueprintNotFoundException e) {
+            throw new BlueprintNotFoundException(e.getMessage());
+        }
+    }
+
+    public void deleteBluePrint(String author, String name) throws BlueprintNotFoundException {
+        try {
+            this.bpp.deleteBluePrint(author, name);
         } catch (BlueprintNotFoundException e) {
             throw new BlueprintNotFoundException(e.getMessage());
         }

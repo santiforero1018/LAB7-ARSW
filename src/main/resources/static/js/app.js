@@ -26,8 +26,8 @@ appModule = (function () {
         newPoints.push({"x":parseInt($('.nuevo').eq(1).val()),"y":parseInt($('.nuevo').eq(2).val())});
         
         // alert('Punto añadido al BluePrint, Recuerda al final salvar el BluePrint');
-        // $('.nuevo').eq(1).text(" ");
-        // $('.nuevo').eq(2).text(" ");
+        $('.nuevo').eq(1).text('');
+        $('.nuevo').eq(2).text('');
     }
 
     function hide(){
@@ -160,9 +160,33 @@ appModule = (function () {
                 success: function (data) {
                     newPoints = [];
                     getBluePrints();
+                    name = '';
+                    hide();
                     resolve(data);
                 },
                 error: function (error) {
+                    reject(error);
+                }
+            });
+        });
+    }
+
+    function deleteBlueprint(){
+        var canvas = document.getElementById("paint");
+        var c = canvas.getContext("2d");
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        return new Promise((resolve, reject)=>{
+            $.ajax({
+                url: "/API-V1.0Blueprints/"+author+"/"+name,
+                type: "DELETE",
+                success: function(data){
+                    newPoints = [];
+                    getBluePrints();
+                    name = '';
+                    $('#selected').text('');
+                    resolve(data);
+                },
+                error: function(error){
                     reject(error);
                 }
             });
@@ -209,6 +233,7 @@ appModule = (function () {
         getABluePrint,
         putBluePrint,
         newBluePrint,
+        deleteBlueprint,
         initPointerCanvas: function () {
             var canvas = document.getElementById("paint");
             if (window.PointerEvent) {
