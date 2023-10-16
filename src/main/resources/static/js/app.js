@@ -22,6 +22,19 @@ appModule = (function () {
     }
 
 
+    function addNewPoint() {
+        newPoints.push({"x":parseInt($('.nuevo').eq(1).val()),"y":parseInt($('.nuevo').eq(2).val())});
+        
+        // alert('Punto añadido al BluePrint, Recuerda al final salvar el BluePrint');
+        // $('.nuevo').eq(1).text(" ");
+        // $('.nuevo').eq(2).text(" ");
+    }
+
+    function hide(){
+        $('.table-borderless').toggleClass('invisible');
+    }
+
+
     function getBluePrints() {
         can = false;
         newPoints = [];
@@ -35,8 +48,7 @@ appModule = (function () {
             });
 
 
-
-            $('.table').find('td').remove();
+            $('.table').eq(0).find('td').remove();
 
 
             var i = 0;
@@ -45,7 +57,7 @@ appModule = (function () {
                 newRow.append('<td class="bpname">' + info.name + '</td>');
                 newRow.append('<td>' + info.points + '</td>');
                 newRow.append('<td><button class="draw" onclick="appModule.getABluePrint(' + i + ')">Show</button></td>');
-                $('.table').append(newRow);
+                $('.table').eq(0).append(newRow);
                 i++;
             });
 
@@ -54,7 +66,7 @@ appModule = (function () {
             $('#total').text(totalPoints);
         });
 
-        
+
     }
 
     function getABluePrint(index) {
@@ -99,7 +111,7 @@ appModule = (function () {
             if (can) {
                 ctx.moveTo(nextPoint[0], nextPoint[1]);
                 ctx.lineTo(event.pageX - offset.left, event.pageY - offset.top);
-                newPoints.push({"x":event.pageX - offset.left, "y":event.pageY - offset.top});
+                newPoints.push({ "x": event.pageX - offset.left, "y": event.pageY - offset.top });
                 ctx.stroke();
                 nextPoint[0] = event.pageX - offset.left;
                 nextPoint[1] = event.pageY - offset.top;
@@ -115,18 +127,42 @@ appModule = (function () {
 
 
     function putBluePrint() {
-        return new Promise((resolve,reject) =>{
+        return new Promise((resolve, reject) => {
             $.ajax({
-                url: "/API-V1.0Blueprints/"+author+"/"+name,
+                url: "/API-V1.0Blueprints/" + author + "/" + name,
                 type: 'PUT',
-                data: JSON.stringify({"author":author,"points":newPoints,"name":name}),
+                data: JSON.stringify({ "author": author, "points": newPoints, "name": name }),
                 contentType: "application/json",
-                success: function (dataa){
+                success: function (dataa) {
                     newPoints = [];
                     getBluePrints();
                     resolve(dataa);
                 },
-                error: function (error){
+                error: function (error) {
+                    reject(error);
+                }
+            });
+        });
+    }
+
+    function newBluePrint() {
+        var canvas = document.getElementById("paint");
+        var c = canvas.getContext("2d");
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        name = $('.nuevo').eq(0).val();
+        console.log("Nombre del plano: "+name);
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: "/API-V1.0Blueprints/blueprints",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ "author": author, "points": newPoints, "name": name }),
+                success: function (data) {
+                    newPoints = [];
+                    getBluePrints();
+                    resolve(data);
+                },
+                error: function (error) {
                     reject(error);
                 }
             });
@@ -167,9 +203,12 @@ appModule = (function () {
     return {
         setAuthorName,
         getAuthorName,
+        addNewPoint,
+        hide,
         getBluePrints,
         getABluePrint,
         putBluePrint,
+        newBluePrint,
         initPointerCanvas: function () {
             var canvas = document.getElementById("paint");
             if (window.PointerEvent) {

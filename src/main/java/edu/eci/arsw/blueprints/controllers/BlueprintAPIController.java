@@ -63,7 +63,7 @@ public class BlueprintAPIController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/planos")
+    @RequestMapping(method = RequestMethod.POST, value = "/blueprints")
     public ResponseEntity<?> addNewBlueprint(@RequestBody Blueprint bp){
         try {
             this.bps.addNewBlueprint(bp);
