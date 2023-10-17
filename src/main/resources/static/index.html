@@ -3,87 +3,94 @@
 
 <head>
     <title>Blueprints</title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
-    <script src="/webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
     <script src="js/apimock.js"></script>
     <script src="js/apiclient.js"></script>
     <script src="js/app.js"></script>
+
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/CSS/styles.css" />
+    <link rel="stylesheet" href="/CSS/p.css" />
 
 </head>
 
 <body onload="appModule.initPointerCanvas()">
+
     <div class="info">
-        <label> Author</label> <input id="theInput" type="text" placeholder="Author">
+        <label for="theInput"> Author</label> <input id="theInput" type="text" placeholder="Author">
         <button class="buttom" onclick="appModule.getBluePrints()">Get Blueprints</button>
         <h2>Total Blueprints For <span id="AuthorName"></span> </h2>
 
-        <table class="table table-bordered border-primary">
-            <tr>
-                <th>BluePrintName</th>
-                <th>TotalPoints</th>
-                <th>Show</th>
-                <!-- <th>ShowOption</th> -->
-            </tr>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary">
+                <tr>
+                    <th>BluePrintName</th>
+                    <th>TotalPoints</th>
+                    <th>Show</th>
+                    <!-- <th>ShowOption</th> -->
+                </tr>
+            </table>
+
+        </div>
 
 
         <h2>Total user points <span id="total"></span></h3>
     </div>
 
 
-    <div class="table-wrapper">
-        <!-- boton de agregar -->
-        <button type="button" id="addB" class="new btn btn-outline-danger" onclick="appModule.hide()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus"
-                viewBox="0 0 16 16">
-                <path
-                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z">
-                </path>
-            </svg>
-            New Blueprint
-        </button>
 
-        <table class="table table-borderless invisible">
-            <thead>
-                <tr>
-                    <td><input class="nuevo" type="text" placeholder="Name For New Blueprint"></td>
-                    <td><input class="nuevo cord" type="text" placeholder="Point X"></td>
-                    <td><input class="nuevo cord" type="text" placeholder="Point Y"></td>
-                    <td><a class="add" title="Add" data-toggle="tooltip"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="25" height="25" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
-                                <path
-                                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-                            </svg>
-                        </a>
-                        <a class="summit" title="Summit" data-toggle="tooltip"><svg xmlns="http://www.w3.org/2000/svg"
-                                width="25" height="25" fill="currentColor" class="bi bi-cloud-arrow-up"
-                                viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z" />
-                                <path
-                                    d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
-                            </svg>
-                        </a>
-                    </td>
-                </tr>
-            </thead>
-        </table>
-    </div>
 
 
 
     <div class="canvas">
 
-        <h2>Blueprint: <span id="selected"></span></h3>
+        <div class="table-wrapper">
+            <!--boton de agregar -->
+            <button type="button" id="addB" class="new btn btn-outline-danger" onclick="appModule.hide()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z">
+                    </path>
+                </svg>
+                New Blueprint
+            </button>
 
-            <canvas id="paint" width="700" height="700"></canvas>
+            <table class="table table-borderless invisible">
+                <thead>
+                    <tr>
+                        <td><input class="nuevo" type="text" placeholder="Name For New Blueprint"></td>
+                        <td><input class="nuevo cord" type="text" placeholder="Point X"></td>
+                        <td><input class="nuevo cord" type="text" placeholder="Point Y"></td>
+                        <td><a class="add" title="Add" data-toggle="tooltip"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="25" height="25" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                    <path
+                                        d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                            </a>
+                            <a class="summit" title="Summit" data-toggle="tooltip"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                                    class="bi bi-cloud-arrow-up" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M7.646 5.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2z" />
+                                    <path
+                                        d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
 
+        <h2>Blueprint: <span id="selected"></span></h2>
 
+        <canvas id="paint" width="700" height="700"></canvas>
+
+        <div class="crud">
             <!-- boton de actualizar -->
             <button type="button" class="upt btn btn-outline-danger"
                 onclick="appModule.putBluePrint()
@@ -103,7 +110,7 @@
 
             <!-- boton de eliminar -->
             <button type="button" class="upt btn btn-outline-danger" onclick="appModule.deleteBlueprint().then(responseData =>{console.log('Solicitud DELETE exitosa:', responseData);})
-                .catch(error => {console.error('Error en la solicitud DELETE:', error);});">
+            .catch(error => {console.error('Error en la solicitud DELETE:', error);});">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
                     viewBox="0 0 16 16">
                     <path
@@ -115,30 +122,27 @@
                 </svg>
                 Delete
             </button>
-
-
             <br><br>
+        </div>
+
     </div>
 
-
-
-
-    <script>
-        $('#theInput').change(function () {
-            appModule.setAuthorName();
-            $('#AuthorName').text(appModule.getAuthorName());
-        });
-
-        $('.add').click(function () {
-            appModule.addNewPoint();
-        });
-
-        $('.summit').click(function () {
-            appModule.newBluePrint().then(responseData => { console.log('Solicitud POST exitosa:', responseData); })
-                .catch(error => { console.error('Error en la solicitud POST:', error); });
-        });
-    </script>
-
 </body>
+
+<script>
+    $('#theInput').change(function () {
+        appModule.setAuthorName();
+        $('#AuthorName').text(appModule.getAuthorName());
+    });
+
+    $('.add').click(function () {
+        appModule.addNewPoint();
+    });
+
+    $('.summit').click(function () {
+        appModule.newBluePrint().then(responseData => { console.log('Solicitud POST exitosa:', responseData); })
+            .catch(error => { console.error('Error en la solicitud POST:', error); });
+    });
+</script>
 
 </html>
