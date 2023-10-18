@@ -23,20 +23,23 @@ appModule = (function () {
 
 
     function addNewPoint() {
-        newPoints.push({"x":parseInt($('.nuevo').eq(1).val()),"y":parseInt($('.nuevo').eq(2).val())});
-        
+        newPoints.push({ "x": parseInt($('.nuevo').eq(1).val()), "y": parseInt($('.nuevo').eq(2).val()) });
+
         // alert('Punto añadido al BluePrint, Recuerda al final salvar el BluePrint');
-        $('.nuevo').eq(1).text('');
-        $('.nuevo').eq(2).text('');
+        $('.nuevo').eq(1).val('');
+        $('.nuevo').eq(2).val('');
     }
 
-    function hide(){
+    function hide() {
         $('.table-borderless').toggleClass('invisible');
     }
 
 
+
     function getBluePrints() {
         can = false;
+        $('#addB').prop('disabled', false);
+        $('.upt').prop('disabled', true);
         newPoints = [];
         var canvas = document.getElementById("paint");
         var c = canvas.getContext("2d");
@@ -64,6 +67,7 @@ appModule = (function () {
 
             const totalPoints = data.reduce((acc, bluePrint) => acc + bluePrint.points.length, 0);
             $('#total').text(totalPoints);
+
         });
 
 
@@ -71,6 +75,7 @@ appModule = (function () {
 
     function getABluePrint(index) {
         can = true;
+        $('.upt').prop('disabled', false);
         const bpname = $('td.bpname').eq(index).text();
 
         currentApi.getBlueprintsByNameAndAuthor(author, bpname, function (data) {
@@ -136,6 +141,7 @@ appModule = (function () {
                 success: function (dataa) {
                     newPoints = [];
                     getBluePrints();
+                    $('#selected').text("");
                     resolve(dataa);
                 },
                 error: function (error) {
@@ -150,7 +156,7 @@ appModule = (function () {
         var c = canvas.getContext("2d");
         c.clearRect(0, 0, canvas.width, canvas.height);
         name = $('.nuevo').eq(0).val();
-        console.log("Nombre del plano: "+name);
+        console.log("Nombre del plano: " + name);
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: "/API-V1.0Blueprints/blueprints",
@@ -161,6 +167,7 @@ appModule = (function () {
                     newPoints = [];
                     getBluePrints();
                     name = '';
+                    $('.nuevo').eq(0).val('');
                     hide();
                     resolve(data);
                 },
@@ -171,22 +178,22 @@ appModule = (function () {
         });
     }
 
-    function deleteBlueprint(){
+    function deleteBlueprint() {
         var canvas = document.getElementById("paint");
         var c = canvas.getContext("2d");
         c.clearRect(0, 0, canvas.width, canvas.height);
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
             $.ajax({
-                url: "/API-V1.0Blueprints/"+author+"/"+name,
+                url: "/API-V1.0Blueprints/" + author + "/" + name,
                 type: "DELETE",
-                success: function(data){
+                success: function (data) {
                     newPoints = [];
                     getBluePrints();
                     name = '';
-                    $('#selected').text('');
+                    $('#selected').text("");
                     resolve(data);
                 },
-                error: function(error){
+                error: function (error) {
                     reject(error);
                 }
             });
@@ -235,12 +242,28 @@ appModule = (function () {
         newBluePrint,
         deleteBlueprint,
         initPointerCanvas: function () {
+            $(document).ready(function () {
+                // Detecta cambios en el input "theInput"
+                $('#theInput').on('input', function () {
+                    var author = $(this).val();
+                    var getButton = $('#get');
+
+                    // Habilita o inhabilita el botón en función del contenido del input
+                    if (author.trim() !== '') {
+                        getButton.prop('disabled', false); // Habilita el botón
+                    } else {
+                        getButton.prop('disabled', true); // Inhabilita el botón
+                    }
+                });
+
+                // También verifica el estado del input al cargar la página
+                $('#theInput').trigger('input');
+            });
             var canvas = document.getElementById("paint");
             if (window.PointerEvent) {
                 canvas.addEventListener("pointerdown", draw, false);
             }
             else canvas.addEventListener("mousedown", draw, false);
-
         }
     }
 

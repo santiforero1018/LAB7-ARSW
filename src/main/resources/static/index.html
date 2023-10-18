@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.2/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/CSS/p.css" />
+    <link rel="stylesheet" href="/CSS/P.css" />
 
 </head>
 
@@ -22,7 +22,7 @@
 
     <div class="info">
         <label for="theInput"> Author</label> <input id="theInput" type="text" placeholder="Author">
-        <button class="buttom" onclick="appModule.getBluePrints()">Get Blueprints</button>
+        <button class="buttom btn btn-outline-light" id="get" disabled onclick="appModule.getBluePrints()">Get Blueprints</button>
         <h2>Total Blueprints For <span id="AuthorName"></span> </h2>
 
         <div class="table-responsive">
@@ -43,7 +43,7 @@
 
         <div class="table-wrapper">
             <!--boton de agregar -->
-            <button type="button" id="addB" class="new btn btn-outline-danger" onclick="appModule.hide()">
+            <button type="button" id="addB" class="new btn btn-outline-light" disabled onclick="appModule.hide()">
                 <i class="fa fa-plus"></i>
                 New Blueprint
             </button>
@@ -70,8 +70,8 @@
 
         <div class="crud">
             <!-- boton de actualizar -->
-            <button type="button" class="upt btn btn-outline-danger"
-                onclick="appModule.putBluePrint()
+            <button type="button" class="upt btn btn-outline-light"
+                disabled onclick="appModule.putBluePrint()
                                                                                             .then(responseData =>{console.log('Solicitud PUT exitosa:', responseData);})    
                                                                                             .catch(error => {console.error('Error en la solicitud PUT:', error);});">
                                                                                             
@@ -80,7 +80,7 @@
             </button>
 
             <!-- boton de eliminar -->
-            <button type="button" class="upt btn btn-outline-danger" onclick="appModule.deleteBlueprint()
+            <button type="button" class="upt btn btn-outline-light" disabled onclick="appModule.deleteBlueprint()
                                                                                                 .then(responseData =>{console.log('Solicitud DELETE exitosa:', responseData);})
                                                                                                 .catch(error => {console.error('Error en la solicitud DELETE:', error);});">
                 <i class="fa fa-trash"></i>

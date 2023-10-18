@@ -2,17 +2,23 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+
 }
 
 body {
     display: flex;
-    justify-content: center;
+
     align-items: center;
-    width: 100%;
-    height: 100vh;
+
     background: url("../IMG/fondo.jpg") no-repeat;
     background-size: cover;
     background-position: center;
+
+}
+
+.container {
+
+    display: flex;
 
 }
 
@@ -23,37 +29,35 @@ body {
 }
 
 .info {
-    margin-left: 5%;
-    margin-right: 3%;
-    margin-top: -10%;
     float: left;
+    height: auto;
     width: 50%;
+   
 }
 
 .canvas {
-    width: 50%;
-    float: right;
-    position: flex;
-    margin-left: 10%;
     touch-action: none;
+    float: left;
+    width: 50%;
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .canvas h2 {
-    margin-top: 35%;
     color: white;
     position: relative;
-
+    
 }
 
 label {
-    color: white;
     font-size: 2em;
 }
 
 
 .table {
-    width: 100%;
-    margin-right: 10%;
+    width: 95%;
     font-size: 2em;
     --bs-table-bg: transparent !important;
     --bs-table-color: #fff !important;
@@ -69,14 +73,13 @@ label {
     border: 2px solid white;
     background-color: black;
     animation: animateBg 5s linear infinite;
-
 }
 
 .info h2,
+label,
 .table {
     color: white;
-    margin-bottom: 12%;
-    margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 #theInput {
@@ -99,7 +102,8 @@ label {
     background-color: rgb(254, 152, 152);
 }
 
-.buttom:hover, .draw:hover, .upt:hover {
+.buttom:hover,
+.draw:hover{
     height: 45px;
     background-color: blue !important;
     color: red !important;
@@ -122,13 +126,11 @@ label {
     animation: animateBg 5s linear infinite;
 }
 
-.new {
-    position: absolute;
-    width: 25%;
-    height: 40px;
-    margin-top: -28%;
-    margin-right: -31%;
-    margin-bottom: 3%;
+
+.crud {
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }
 
 .upt {
@@ -136,14 +138,14 @@ label {
     margin-left: 5%;
     margin-right: 10%;
     width: 30%;
-    animation: animateBg 5s linear infinite;
 }
+
 
 .buttom {
     position: absolute;
-    width: 10%;
+    width: 200px;
     height: 40px;
-    margin-left: 10%;
+    margin-left: 2%;
     background: rgba(255, 255, 255, .5);
     border: none;
     outline: none;
@@ -157,26 +159,25 @@ label {
 }
 
 .table-wrapper {
-    position: absolute;
-    top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     right: 21%;
-    width: 500px;
+    width: 100%;
     height: 160px;
-    
+  
 }
 
 .table-wrapper #addB {
-    position: relative;
-    top: 65%;
-    width: 75%;
+    width: 70%;
 }
 
-.table-wrapper > table {
+.table-wrapper>table {
     position: relative;
     top: 15%;
 }
 
-.nuevo{
+.nuevo {
     background: transparent;
     border-radius: 7px;
     border: 2px solid white;
@@ -185,7 +186,7 @@ label {
 
 }
 
-.cord{
+.cord {
     width: 110px;
     height: 50px;
 }
