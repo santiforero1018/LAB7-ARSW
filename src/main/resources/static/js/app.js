@@ -38,39 +38,36 @@ appModule = (function () {
 
     function getBluePrints() {
         can = false;
-        $('#addB').prop('disabled', false);
-        $('.upt').prop('disabled', true);
-        newPoints = [];
-        var canvas = document.getElementById("paint");
-        var c = canvas.getContext("2d");
-        c.clearRect(0, 0, canvas.width, canvas.height);
-        c.beginPath();
-        currentApi.getBlueprintsByAuthor(author, function (data) {
-            const bluePrints = data.map(function (bp) {
-                return { name: bp.name, points: bp.points.length };
-            });
-
-
-            $('.table').eq(0).find('td').remove();
-
-
-            var i = 0;
-            bluePrints.map(function (info) {
-                const newRow = $('<tr>');
-                newRow.append('<td class="bpname">' + info.name + '</td>');
-                newRow.append('<td>' + info.points + '</td>');
-                newRow.append('<td><button class="draw" onclick="appModule.getABluePrint(' + i + ')">Show</button></td>');
-                $('.table').eq(0).append(newRow);
-                i++;
-            });
-
-
-            const totalPoints = data.reduce((acc, bluePrint) => acc + bluePrint.points.length, 0);
-            $('#total').text(totalPoints);
-
-        });
-
-
+            $('#addB').prop('disabled', false);
+            $('.upt').prop('disabled', true);
+            newPoints = [];
+            var canvas = document.getElementById("paint");
+            var c = canvas.getContext("2d");
+            c.clearRect(0, 0, canvas.width, canvas.height);
+            c.beginPath();
+            currentApi.getBlueprintsByAuthor(author).then(function (data) {
+                const bluePrints = data.map(function (bp) {
+                    return { name: bp.name, points: bp.points.length };
+                });
+    
+                $('.table').eq(0).find('td').remove();
+    
+    
+                var i = 0;
+                bluePrints.map(function (info) {
+                    const newRow = $('<tr>');
+                    newRow.append('<td class="bpname">' + info.name + '</td>');
+                    newRow.append('<td>' + info.points + '</td>');
+                    newRow.append('<td><button class="draw" onclick="appModule.getABluePrint(' + i + ')">Show</button></td>');
+                    $('.table').eq(0).append(newRow);
+                    i++;
+                });
+    
+                const totalPoints = data.reduce((acc, bluePrint) => acc + bluePrint.points.length, 0);
+                $('#total').text(totalPoints);
+            }).catch(function(error){
+                $('.table').eq(0).find('td').remove();
+            }); 
     }
 
     function getABluePrint(index) {
@@ -140,7 +137,6 @@ appModule = (function () {
                 contentType: "application/json",
                 success: function (dataa) {
                     newPoints = [];
-                    getBluePrints();
                     $('#selected').text("");
                     resolve(dataa);
                 },
@@ -165,7 +161,6 @@ appModule = (function () {
                 data: JSON.stringify({ "author": author, "points": newPoints, "name": name }),
                 success: function (data) {
                     newPoints = [];
-                    getBluePrints();
                     name = '';
                     $('.nuevo').eq(0).val('');
                     hide();
@@ -188,7 +183,6 @@ appModule = (function () {
                 type: "DELETE",
                 success: function (data) {
                     newPoints = [];
-                    getBluePrints();
                     name = '';
                     $('#selected').text("");
                     resolve(data);

@@ -31,7 +31,6 @@
                     <th>BluePrintName</th>
                     <th>TotalPoints</th>
                     <th>Show</th>
-                    <!-- <th>ShowOption</th> -->
                 </tr>
             </table>
 
@@ -72,7 +71,7 @@
             <!-- boton de actualizar -->
             <button type="button" class="upt btn btn-outline-light"
                 disabled onclick="appModule.putBluePrint()
-                                                                                            .then(responseData =>{console.log('Solicitud PUT exitosa:', responseData);})    
+                                                                                            .then(responseData =>{appModule.getBluePrints();console.log('Solicitud PUT exitosa:', responseData);})    
                                                                                             .catch(error => {console.error('Error en la solicitud PUT:', error);});">
                                                                                             
                 <i class="fa fa-cloud-upload"></i>
@@ -81,7 +80,7 @@
 
             <!-- boton de eliminar -->
             <button type="button" class="upt btn btn-outline-light" disabled onclick="appModule.deleteBlueprint()
-                                                                                                .then(responseData =>{console.log('Solicitud DELETE exitosa:', responseData);})
+                                                                                                .then(responseData =>{appModule.getBluePrints();console.log('Solicitud DELETE exitosa:', responseData);})
                                                                                                 .catch(error => {console.error('Error en la solicitud DELETE:', error);});">
                 <i class="fa fa-trash"></i>
                 Delete
@@ -104,7 +103,7 @@
     });
 
     $('.summit').click(function () {
-        appModule.newBluePrint().then(responseData => { console.log('Solicitud POST exitosa:', responseData); })
+        appModule.newBluePrint().then(responseData => {appModule.getBluePrints();console.log('Solicitud POST exitosa:', responseData); })
             .catch(error => { console.error('Error en la solicitud POST:', error); });
     });
 </script>
