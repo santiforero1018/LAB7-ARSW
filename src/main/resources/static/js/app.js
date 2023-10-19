@@ -80,7 +80,6 @@ appModule = (function () {
 
             $('#selected').text(bpname);
             name = bpname;
-            console.log(name);
             var canvas = document.getElementById("paint");
 
             var c = canvas.getContext("2d");
@@ -106,8 +105,6 @@ appModule = (function () {
     function draw(event) {
         var canvas = document.getElementById("paint");
         var offset = getOffset(canvas);
-        //var datadiv = document.getElementById('datadiv');
-        //datadiv.innerHTML = 'offsetLeft: ' + offset.left + ', offsetTop: ' + offset.top;
         if (canvas.getContext) {
             var ctx = canvas.getContext("2d");
             if (can) {
@@ -152,7 +149,6 @@ appModule = (function () {
         var c = canvas.getContext("2d");
         c.clearRect(0, 0, canvas.width, canvas.height);
         name = $('.nuevo').eq(0).val();
-        console.log("Nombre del plano: " + name);
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: "/API-V1.0Blueprints/blueprints",
@@ -192,23 +188,7 @@ appModule = (function () {
                 }
             });
         });
-    }
-
-
-    //  function drawMouse(event) {
-
-    //   var canvas = document.getElementById('mycanvas');
-    //    var offset  = getOffset(canvas);
-    //    var datadiv = document.getElementById('datadiv');
-
-    //    if (canvas.getContext) {
-    //      var ctx = canvas.getContext("2d");
-
-    //   ctx.fillStyle = '#ff0000';
-    //   ctx.fillRect(event.pageX-offset.left, event.pageY-offset.top, 5, 5);
-
-    //  }
-    // } 
+    } 
 
 
     function getOffset(obj) {
