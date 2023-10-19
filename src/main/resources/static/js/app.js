@@ -25,7 +25,7 @@ appModule = (function () {
     function addNewPoint() {
         newPoints.push({ "x": parseInt($('.nuevo').eq(1).val()), "y": parseInt($('.nuevo').eq(2).val()) });
 
-        // alert('Punto añadido al BluePrint, Recuerda al final salvar el BluePrint');
+        alert('Punto añadido al BluePrint, Recuerda al final salvar el BluePrint');
         $('.nuevo').eq(1).val('');
         $('.nuevo').eq(2).val('');
     }
